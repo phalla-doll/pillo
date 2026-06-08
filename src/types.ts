@@ -6,7 +6,8 @@ export type SileoState =
 	| "error"
 	| "warning"
 	| "info"
-	| "action";
+	| "action"
+	| "custom";
 
 export interface SileoStyles {
 	title?: string;
@@ -16,7 +17,7 @@ export interface SileoStyles {
 }
 
 export interface SileoButton {
-	title: string;
+	label: string;
 	onClick: () => void;
 }
 
@@ -31,16 +32,25 @@ export const SILEO_POSITIONS = [
 
 export type SileoPosition = (typeof SILEO_POSITIONS)[number];
 
+export interface SileoCustomRenderProps {
+	id: string;
+	dismiss: () => void;
+}
+
+export type SileoCustomRender = (props: SileoCustomRenderProps) => ReactNode;
+
 export interface SileoOptions {
+	id?: string;
 	title?: string;
-	description?: ReactNode | string;
+	description?: ReactNode;
 	type?: SileoState;
 	position?: SileoPosition;
 	duration?: number | null;
-	icon?: ReactNode | null;
+	icon?: ReactNode;
 	styles?: SileoStyles;
 	fill?: string;
 	roundness?: number;
-	autopilot?: boolean | { expand?: number; collapse?: number };
+	autopilot?: false | { expand?: number; collapse?: number };
 	button?: SileoButton;
+	custom?: SileoCustomRender;
 }
