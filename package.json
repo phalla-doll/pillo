@@ -1,12 +1,16 @@
 {
 	"name": "sileo",
-	"version": "0.1.5",
+	"version": "0.2.0",
 	"description": "An opinionated, physics based toast notification library for react.",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/hiaaryan/sileo.git"
 	},
+	"sideEffects": [
+		"**/*.css",
+		"./dist/styles.css"
+	],
 	"exports": {
 		".": {
 			"import": {
@@ -26,16 +30,33 @@
 	"files": [
 		"dist"
 	],
+	"engines": {
+		"node": ">=18"
+	},
 	"scripts": {
 		"build": "rm -rf dist && bunchee && cp src/styles.css dist/styles.css",
-		"dev": "bunchee --watch"
+		"dev": "bunchee --watch",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run",
+		"test:watch": "vitest"
 	},
 	"peerDependencies": {
 		"react": ">=18",
 		"react-dom": ">=18"
 	},
 	"devDependencies": {
-		"bunchee": "^6.9.4"
+		"@testing-library/jest-dom": "^6.4.0",
+		"@testing-library/react": "^16.0.0",
+		"@testing-library/user-event": "^14.5.0",
+		"@types/react": "^18.3.0",
+		"@types/react-dom": "^18.3.0",
+		"@vitest/coverage-v8": "^2.1.0",
+		"bunchee": "^6.9.4",
+		"jsdom": "^25.0.0",
+		"react": "^18.3.0",
+		"react-dom": "^18.3.0",
+		"typescript": "^5.5.0",
+		"vitest": "^2.1.0"
 	},
 	"dependencies": {
 		"motion": "^12.34.0"
