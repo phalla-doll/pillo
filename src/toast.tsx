@@ -201,7 +201,7 @@ const createToast = (options: SileoOptions, state?: SileoState) => {
 	store.cancelExitTimer(id);
 
 	const prev = live.find((t) => t.id === id);
-	const item = buildSileoItem(merged, id, state, prev?.position);
+	const item = buildSileoItem(merged, id, state);
 
 	if (prev) {
 		store.update((p) => p.map((t) => (t.id === id ? item : t)));
