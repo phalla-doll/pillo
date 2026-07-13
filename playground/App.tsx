@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { sileo, Toaster, type SileoPosition } from "sileo";
+import { pillo, Toaster, type PilloPosition } from "pillo";
 
-const POSITIONS: SileoPosition[] = [
+const POSITIONS: PilloPosition[] = [
 	"top-left",
 	"top-center",
 	"top-right",
@@ -61,12 +61,12 @@ const MonitorIcon = () => (
 );
 
 export default function App() {
-	const [position, setPosition] = useState<SileoPosition>("bottom-right");
+	const [position, setPosition] = useState<PilloPosition>("bottom-right");
 	const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
 
 	return (
 		<div className="wrap">
-			<h1>Sileo playground</h1>
+			<h1>Pillo playground</h1>
 			<p className="sub">Imports the library directly from <code>../src</code>. Edit and save — Vite HMR reloads.</p>
 
 			<fieldset className="toaster-config">
@@ -132,7 +132,7 @@ export default function App() {
 				<div className="grid">
 					<button
 						onClick={() =>
-							sileo.success({
+							pillo.success({
 								title: "Saved successfully",
 								description: "Your changes are now live across all devices.",
 							})
@@ -142,7 +142,7 @@ export default function App() {
 					</button>
 					<button
 						onClick={() =>
-							sileo.error({
+							pillo.error({
 								title: "Couldn't save",
 								description: "We hit a network error. Please check your connection and try again.",
 							})
@@ -152,7 +152,7 @@ export default function App() {
 					</button>
 					<button
 						onClick={() =>
-							sileo.warning({
+							pillo.warning({
 								title: "Disk is almost full",
 								description: "You have less than 1 GB remaining. Free up space to avoid disruptions.",
 							})
@@ -162,7 +162,7 @@ export default function App() {
 					</button>
 					<button
 						onClick={() =>
-							sileo.info({
+							pillo.info({
 								title: "Heads up — new build available",
 								description: "Reload the page to pick up the latest release notes and fixes.",
 							})
@@ -172,7 +172,7 @@ export default function App() {
 					</button>
 					<button
 						onClick={() =>
-							sileo.loading({
+							pillo.loading({
 								title: "Uploading…",
 								description: "Transferring 12 files to the server. This may take a moment.",
 							})
@@ -182,9 +182,9 @@ export default function App() {
 					</button>
 					<button
 						onClick={() =>
-							sileo.show({
+							pillo.show({
 								title: "Generic toast",
-								description: "This one uses sileo.show with no explicit type.",
+								description: "This one uses pillo.show with no explicit type.",
 							})
 						}
 					>
@@ -198,10 +198,10 @@ export default function App() {
 				<div className="grid">
 					<button
 						onClick={() =>
-							sileo.action({
+							pillo.action({
 								title: "File deleted",
 								description: "You can still undo this.",
-								button: { label: "Undo", onClick: () => sileo.success("Restored") },
+								button: { label: "Undo", onClick: () => pillo.success("Restored") },
 							})
 						}
 					>
@@ -209,13 +209,13 @@ export default function App() {
 					</button>
 					<button
 						onClick={() => {
-							const id = sileo.loading({
+							const id = pillo.loading({
 								title: "Uploading…",
 								description: "Sending report.pdf to the server.",
 							});
 							setTimeout(
 								() =>
-									sileo.update(id, {
+									pillo.update(id, {
 										type: "success",
 										title: "Uploaded!",
 										description: "report.pdf is now available in your shared drive.",
@@ -228,7 +228,7 @@ export default function App() {
 					</button>
 					<button
 						onClick={() =>
-							sileo.promise(
+							pillo.promise(
 								new Promise((res, rej) => setTimeout(() => (Math.random() > 0.5 ? res("ok") : rej("nope")), 1500)),
 								{
 									loading: { title: "Working…", description: "Crunching the numbers, hang tight." },
@@ -251,7 +251,7 @@ export default function App() {
 				<div className="grid">
 					<button
 						onClick={() =>
-							sileo.custom(({ id, dismiss }) => (
+							pillo.custom(({ id, dismiss }) => (
 								<div role="status" style={{ padding: 12 }}>
 									<div style={{ fontWeight: 600, marginBottom: 6 }}>Custom JSX</div>
 									<div style={{ fontSize: 13, opacity: 0.8, marginBottom: 8 }}>id: {id}</div>
@@ -262,8 +262,8 @@ export default function App() {
 					>
 						custom
 					</button>
-					<button onClick={() => sileo.clear()}>clear all</button>
-					<button onClick={() => sileo.clear(position)}>clear at position</button>
+					<button onClick={() => pillo.clear()}>clear all</button>
+					<button onClick={() => pillo.clear(position)}>clear at position</button>
 				</div>
 			</fieldset>
 
@@ -272,7 +272,7 @@ export default function App() {
 				<div className="grid">
 					<button
 						onClick={() => {
-							for (let i = 0; i < 5; i++) sileo.info(`Toast #${i + 1}`);
+							for (let i = 0; i < 5; i++) pillo.info(`Toast #${i + 1}`);
 						}}
 					>
 						queue 5

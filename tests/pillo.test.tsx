@@ -3,16 +3,16 @@ import userEvent from "@testing-library/user-event";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { EXIT_DURATION } from "../src/constants";
-import { sileo, Toaster } from "../src/toast";
+import { pillo, Toaster } from "../src/toast";
 
 const renderToaster = (props: Parameters<typeof Toaster>[0] = {}) =>
 	render(<Toaster {...props} />);
 
-describe("sileo basics", () => {
+describe("pillo basics", () => {
 	it("renders a success toast with a title", () => {
 		renderToaster();
 		act(() => {
-			sileo.success({ title: "Saved" });
+			pillo.success({ title: "Saved" });
 		});
 		expect(screen.getByText("Saved")).toBeInTheDocument();
 	});
@@ -20,7 +20,7 @@ describe("sileo basics", () => {
 	it("accepts a plain string shorthand", () => {
 		renderToaster();
 		act(() => {
-			sileo.success("Quick title");
+			pillo.success("Quick title");
 		});
 		expect(screen.getByText("Quick title")).toBeInTheDocument();
 	});
@@ -28,11 +28,11 @@ describe("sileo basics", () => {
 	it("uses role=alert for error toasts and role=status for success", () => {
 		renderToaster();
 		act(() => {
-			sileo.error({ title: "Boom", id: "err" });
-			sileo.success({ title: "Yay", id: "ok" });
+			pillo.error({ title: "Boom", id: "err" });
+			pillo.success({ title: "Yay", id: "ok" });
 		});
-		const err = document.querySelector('[data-sileo-id="err"]');
-		const ok = document.querySelector('[data-sileo-id="ok"]');
+		const err = document.querySelector('[data-pillo-id="err"]');
+		const ok = document.querySelector('[data-pillo-id="ok"]');
 		expect(err).toHaveAttribute("role", "alert");
 		expect(err).toHaveAttribute("aria-live", "assertive");
 		expect(ok).toHaveAttribute("role", "status");
@@ -46,22 +46,22 @@ describe("dismiss + replace race", () => {
 		try {
 			renderToaster();
 			act(() => {
-				sileo.success({ title: "Hello", id: "x" });
+				pillo.success({ title: "Hello", id: "x" });
 			});
 			expect(screen.getByText("Hello")).toBeInTheDocument();
 
 			act(() => {
-				sileo.dismiss("x");
+				pillo.dismiss("x");
 			});
 			// Marked exiting but still in DOM.
-			const node = document.querySelector('[data-sileo-id="x"]');
+			const node = document.querySelector('[data-pillo-id="x"]');
 			expect(node).toHaveAttribute("data-exiting", "true");
 
 			act(() => {
 				vi.advanceTimersByTime(EXIT_DURATION + 1);
 			});
 			expect(
-				document.querySelector('[data-sileo-id="x"]'),
+				document.querySelector('[data-pillo-id="x"]'),
 			).not.toBeInTheDocument();
 		} finally {
 			vi.useRealTimers();
@@ -73,14 +73,14 @@ describe("dismiss + replace race", () => {
 		try {
 			renderToaster();
 			act(() => {
-				sileo.success({ title: "First", id: "race" });
+				pillo.success({ title: "First", id: "race" });
 			});
 			act(() => {
-				sileo.dismiss("race");
+				pillo.dismiss("race");
 			});
 			// Before the orphan exit fires, re-show with the same id.
 			act(() => {
-				sileo.success({ title: "Second", id: "race" });
+				pillo.success({ title: "Second", id: "race" });
 			});
 			act(() => {
 				vi.advanceTimersByTime(EXIT_DURATION + 1);
@@ -97,13 +97,13 @@ describe("dismiss + replace race", () => {
 		try {
 			renderToaster();
 			act(() => {
-				sileo.success({ title: "A", id: "a" });
-				sileo.success({ title: "B", id: "b" });
+				pillo.success({ title: "A", id: "a" });
+				pillo.success({ title: "B", id: "b" });
 			});
 			act(() => {
-				sileo.dismiss("a");
-				sileo.clear();
-				sileo.success({ title: "Fresh", id: "a" });
+				pillo.dismiss("a");
+				pillo.clear();
+				pillo.success({ title: "Fresh", id: "a" });
 			});
 			act(() => {
 				vi.advanceTimersByTime(EXIT_DURATION + 1);
@@ -120,24 +120,24 @@ describe("update()", () => {
 		renderToaster();
 		let id = "";
 		act(() => {
-			id = sileo.show({ title: "Before", id: "u" });
+			id = pillo.show({ title: "Before", id: "u" });
 		});
 		expect(screen.getByText("Before")).toBeInTheDocument();
 		act(() => {
-			sileo.update(id, { title: "After" });
+			pillo.update(id, { title: "After" });
 		});
 		// "Before" may briefly linger as the outgoing header layer; "After"
 		// must be present as the current layer.
 		const current = document.querySelector(
-			'[data-sileo-header-inner][data-layer="current"] [data-sileo-title]',
+			'[data-pillo-header-inner][data-layer="current"] [data-pillo-title]',
 		);
 		expect(current?.textContent).toBe("After");
 	});
 
 	it("noop when the id does not exist", () => {
 		renderToaster();
-		expect(() => sileo.update("nope", { title: "x" })).not.toThrow();
-		expect(document.querySelectorAll("[data-sileo-toast]").length).toBe(0);
+		expect(() => pillo.update("nope", { title: "x" })).not.toThrow();
+		expect(document.querySelectorAll("[data-pillo-toast]").length).toBe(0);
 	});
 });
 
@@ -146,7 +146,7 @@ describe("custom render", () => {
 		renderToaster();
 		const user = userEvent.setup();
 		act(() => {
-			sileo.custom(({ dismiss }) => (
+			pillo.custom(({ dismiss }) => (
 				<button type="button" onClick={dismiss}>
 					close-me
 				</button>
@@ -180,10 +180,10 @@ describe("Escape to dismiss", () => {
 		try {
 			renderToaster();
 			act(() => {
-				sileo.success({ title: "Esc me", id: "esc" });
+				pillo.success({ title: "Esc me", id: "esc" });
 			});
 			const node = document.querySelector<HTMLElement>(
-				'[data-sileo-id="esc"]',
+				'[data-pillo-id="esc"]',
 			);
 			expect(node).not.toBeNull();
 			node?.focus();
@@ -193,13 +193,13 @@ describe("Escape to dismiss", () => {
 				);
 			});
 			expect(
-				document.querySelector('[data-sileo-id="esc"]'),
+				document.querySelector('[data-pillo-id="esc"]'),
 			).toHaveAttribute("data-exiting", "true");
 			act(() => {
 				vi.advanceTimersByTime(EXIT_DURATION + 1);
 			});
 			expect(
-				document.querySelector('[data-sileo-id="esc"]'),
+				document.querySelector('[data-pillo-id="esc"]'),
 			).not.toBeInTheDocument();
 		} finally {
 			vi.useRealTimers();

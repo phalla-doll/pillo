@@ -1,16 +1,15 @@
 <div align="center">
-  <h1>Sileo</h1>
+  <h1>Pillo</h1>
   <p>An opinionated, physics-based toast component for React.</p>
-  <p><a href="https://sileo.aaryan.design">Try Out</a> &nbsp; / &nbsp; <a href="https://sileo.aaryan.design/docs">Docs</a></p>
   <video src="https://github.com/user-attachments/assets/a292d310-9189-490a-9f9d-d0a1d09defce"></video>
 </div>
 
-> This is a fork of [`hiaaryan/sileo`](https://github.com/hiaaryan/sileo) with correctness, accessibility, SSR, and API improvements. See [`REVIEW.md`](./REVIEW.md) for the full list of changes vs upstream and [`CHANGELOG.md`](./CHANGELOG.md) for release notes.
+> **Pillo** is the maintained successor to [`hiaaryan/sileo`](https://github.com/hiaaryan/sileo), which is no longer maintained. It carries forward the same liquid, physics-based design with correctness, accessibility, SSR, and API improvements. See [`REVIEW.md`](./REVIEW.md) for the changes vs the original and [`CHANGELOG.md`](./CHANGELOG.md) for release notes.
 
 ### Installation
 
 ```bash
-npm i sileo
+npm i pillo
 ```
 
 ### Getting Started
@@ -18,8 +17,8 @@ npm i sileo
 Render a single `<Toaster />` near the root of your app and import the stylesheet once:
 
 ```tsx
-import { sileo, Toaster } from "sileo";
-import "sileo/styles.css";
+import { pillo, Toaster } from "pillo";
+import "pillo/styles.css";
 
 export default function App() {
   return (
@@ -31,64 +30,64 @@ export default function App() {
 }
 ```
 
-> **Next.js (App Router):** import `sileo/styles.css` in your root `layout.tsx`. `<Toaster />` is a client component — render it inside a `"use client"` boundary or directly in the layout.
+> **Next.js (App Router):** import `pillo/styles.css` in your root `layout.tsx`. `<Toaster />` is a client component — render it inside a `"use client"` boundary or directly in the layout.
 
 ### Triggering toasts
 
 ```tsx
-sileo.success("Saved");
-sileo.error({ title: "Couldn't save", description: "Please try again." });
-sileo.info("Heads up"); // same as { title: "Heads up" }
+pillo.success("Saved");
+pillo.error({ title: "Couldn't save", description: "Please try again." });
+pillo.info("Heads up"); // same as { title: "Heads up" }
 
 // Promises:
-await sileo.promise(fetch("/save"), {
+await pillo.promise(fetch("/save"), {
   loading: "Saving…",
   success: "Saved!",
   error: (err) => `Failed: ${err}`,
 });
 
 // Custom JSX:
-sileo.custom(({ id, dismiss }) => (
+pillo.custom(({ id, dismiss }) => (
   <div role="status">
     <button onClick={dismiss}>Close {id}</button>
   </div>
 ));
 
 // Update an existing toast:
-const id = sileo.loading("Uploading…");
+const id = pillo.loading("Uploading…");
 // …later
-sileo.update(id, { type: "success", title: "Uploaded!" });
+pillo.update(id, { type: "success", title: "Uploaded!" });
 ```
 
 ### API
 
 | Method                          | Returns        | Notes                                                          |
 | ------------------------------- | -------------- | -------------------------------------------------------------- |
-| `sileo.show(input)`             | `string` (id)  | Generic; honours `type` on the options.                        |
-| `sileo.success(input)`          | `string` (id)  | `input` may be a string shorthand or an options object.        |
-| `sileo.error(input)`            | `string` (id)  | Rendered with `role="alert"` / `aria-live="assertive"`.        |
-| `sileo.warning(input)`          | `string` (id)  | Rendered with `role="alert"` / `aria-live="assertive"`.        |
-| `sileo.info(input)`             | `string` (id)  |                                                                |
-| `sileo.loading(input)`          | `string` (id)  | Defaults `duration: null` (no auto-dismiss).                   |
-| `sileo.action(input)`           | `string` (id)  | For toasts that require a follow-up action.                    |
-| `sileo.custom(render, opts?)`   | `string` (id)  | Render any JSX. `render` receives `{ id, dismiss }`.           |
-| `sileo.update(id, input)`       | `string` (id)  | Updates the toast in place; no-op if the id is unknown.        |
-| `sileo.promise(p, opts)`        | `Promise<T>`   | Transitions a single toast through loading → success / error.  |
-| `sileo.dismiss(id)`             | `void`         | Animates the toast out, then removes it.                       |
-| `sileo.clear(position?)`        | `void`         | Removes all toasts (optionally only those at `position`).      |
+| `pillo.show(input)`             | `string` (id)  | Generic; honours `type` on the options.                        |
+| `pillo.success(input)`          | `string` (id)  | `input` may be a string shorthand or an options object.        |
+| `pillo.error(input)`            | `string` (id)  | Rendered with `role="alert"` / `aria-live="assertive"`.        |
+| `pillo.warning(input)`          | `string` (id)  | Rendered with `role="alert"` / `aria-live="assertive"`.        |
+| `pillo.info(input)`             | `string` (id)  |                                                                |
+| `pillo.loading(input)`          | `string` (id)  | Defaults `duration: null` (no auto-dismiss).                   |
+| `pillo.action(input)`           | `string` (id)  | For toasts that require a follow-up action.                    |
+| `pillo.custom(render, opts?)`   | `string` (id)  | Render any JSX. `render` receives `{ id, dismiss }`.           |
+| `pillo.update(id, input)`       | `string` (id)  | Updates the toast in place; no-op if the id is unknown.        |
+| `pillo.promise(p, opts)`        | `Promise<T>`   | Transitions a single toast through loading → success / error.  |
+| `pillo.dismiss(id)`             | `void`         | Animates the toast out, then removes it.                       |
+| `pillo.clear(position?)`        | `void`         | Removes all toasts (optionally only those at `position`).      |
 
-`input` is either a `string` (treated as `{ title }`) or a `SileoOptions` object.
+`input` is either a `string` (treated as `{ title }`) or a `PilloOptions` object.
 
 ### Toaster props
 
 | Prop       | Type                                                       | Default       |
 | ---------- | ---------------------------------------------------------- | ------------- |
-| `position` | `SileoPosition`                                            | `"top-right"` |
+| `position` | `PilloPosition`                                            | `"top-right"` |
 | `offset`   | `number \| string \| { top, right, bottom, left }`         | `undefined`   |
-| `options`  | `Partial<SileoOptions>` (defaults merged into every toast) | `undefined`   |
+| `options`  | `Partial<PilloOptions>` (defaults merged into every toast) | `undefined`   |
 | `theme`    | `"light" \| "dark" \| "system"`                            | `undefined`   |
 
-`SileoPosition` is one of `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center`, `bottom-right`.
+`PilloPosition` is one of `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center`, `bottom-right`.
 
 ### Accessibility
 
@@ -99,7 +98,7 @@ sileo.update(id, { type: "success", title: "Uploaded!" });
 
 ### SSR
 
-The `<Toaster />` is safe to render on the server. When `theme="system"` it omits `data-theme` on the first render and applies it after mount to avoid hydration mismatches. Imperative calls like `sileo.success(...)` are intended for the client (event handlers, effects).
+The `<Toaster />` is safe to render on the server. When `theme="system"` it omits `data-theme` on the first render and applies it after mount to avoid hydration mismatches. Imperative calls like `pillo.success(...)` are intended for the client (event handlers, effects).
 
 ### Browser support
 
@@ -114,4 +113,6 @@ bun run test
 bun run build
 ```
 
-For detailed upstream docs, see the original project site: https://sileo.aaryan.design
+### Credits
+
+Pillo builds on the original [`sileo`](https://github.com/hiaaryan/sileo) by [@hiaaryan](https://github.com/hiaaryan), licensed under MIT.

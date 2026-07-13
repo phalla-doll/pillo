@@ -13,8 +13,8 @@
 		"isolatedModules": true,
 		"noEmit": true,
 		"paths": {
-			"sileo": ["../src/index.ts"],
-			"sileo/styles.css": ["../src/styles.css"]
+			"pillo": ["../src/index.ts"],
+			"pillo/styles.css": ["../src/styles.css"]
 		}
 	},
 	"include": ["."]

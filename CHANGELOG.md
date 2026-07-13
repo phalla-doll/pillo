@@ -1,21 +1,25 @@
 # Changelog
 
-## 0.2.0 — fork from upstream 0.1.5
+## 0.3.0 — renamed to `pillo`
+
+`pillo` is the maintained successor to the now-unmaintained [`sileo`](https://github.com/hiaaryan/sileo). The package, public API (`pillo.*`), CSS custom properties (`--pillo-*`), and data attributes (`data-pillo-*`) were all renamed from `sileo`. No behavioural changes — this is a rename of the 0.2.0 line below.
+
+## 0.2.0 — fork from upstream `sileo` 0.1.5
 
 ### Breaking changes
 
-- **CSS import is no longer automatic.** Source files no longer `import "./styles.css"`. Consumers must add `import "sileo/styles.css"` once (in `app/layout.tsx` for Next.js).
-- **`SileoButton.title` → `SileoButton.label`.** The field was the visible button label; renamed for clarity.
-- **`SileoOptions.description: ReactNode | string` → `ReactNode`.** `ReactNode` already covers `string`.
-- **`SileoOptions.icon: ReactNode | null` → `ReactNode`.** Same reason.
+- **CSS import is no longer automatic.** Source files no longer `import "./styles.css"`. Consumers must add `import "pillo/styles.css"` once (in `app/layout.tsx` for Next.js).
+- **`PilloButton.title` → `PilloButton.label`.** The field was the visible button label; renamed for clarity.
+- **`PilloOptions.description: ReactNode | string` → `ReactNode`.** `ReactNode` already covers `string`.
+- **`PilloOptions.icon: ReactNode | null` → `ReactNode`.** Same reason.
 - **`autopilot: true` is no longer accepted.** It was indistinguishable from the default. Use `false` to disable, or `{ expand, collapse }` to configure timings.
 
 ### Added
 
-- `sileo.update(id, input)` — update an existing toast in place.
-- `sileo.custom((ctx) => ReactNode, opts?)` — render arbitrary JSX as a toast; receives `{ id, dismiss }`.
-- `sileo.loading(input)` — explicit helper for indefinite loading toasts.
-- **String shorthand:** every helper accepts a plain `string` as well as a `SileoOptions` object — `sileo.success("Saved")` is equivalent to `sileo.success({ title: "Saved" })`.
+- `pillo.update(id, input)` — update an existing toast in place.
+- `pillo.custom((ctx) => ReactNode, opts?)` — render arbitrary JSX as a toast; receives `{ id, dismiss }`.
+- `pillo.loading(input)` — explicit helper for indefinite loading toasts.
+- **String shorthand:** every helper accepts a plain `string` as well as a `PilloOptions` object — `pillo.success("Saved")` is equivalent to `pillo.success({ title: "Saved" })`.
 - Multi-`Toaster` and no-`Toaster` development-time warnings.
 - Test suite (Vitest + React Testing Library) and GitHub Actions CI.
 
@@ -41,13 +45,13 @@
 ### Packaging
 
 - `"sideEffects": ["**/*.css", "./dist/styles.css"]` for proper tree-shaking with CSS preservation.
-- `"use client"` directive on every hook-using file (`toast.tsx`, `sileo.tsx`), not just the entry.
+- `"use client"` directive on every hook-using file (`toast.tsx`, `pillo.tsx`), not just the entry.
 - `engines: { node: ">=18" }`.
 - `tsconfig.json` adds `noUncheckedIndexedAccess` and bumps `target` to `ES2020`.
 
 ### Code quality
 
 - Swipe constants lifted out of the component body.
-- Removed source-level `import "./styles.css"` from `index.ts` and `sileo.tsx`.
+- Removed source-level `import "./styles.css"` from `index.ts` and `pillo.tsx`.
 - Removed unused `// biome-ignore` comments and misleading suppression reasons.
 - 13 MB `sileo.mov` removed from the repo root (the README still embeds the asset from GitHub user-attachments).

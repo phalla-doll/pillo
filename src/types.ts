@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export type SileoState =
+export type PilloState =
 	| "success"
 	| "loading"
 	| "error"
@@ -9,19 +9,19 @@ export type SileoState =
 	| "action"
 	| "custom";
 
-export interface SileoStyles {
+export interface PilloStyles {
 	title?: string;
 	description?: string;
 	badge?: string;
 	button?: string;
 }
 
-export interface SileoButton {
+export interface PilloButton {
 	label: string;
 	onClick: () => void;
 }
 
-export const SILEO_POSITIONS = [
+export const PILLO_POSITIONS = [
 	"top-left",
 	"top-center",
 	"top-right",
@@ -30,27 +30,27 @@ export const SILEO_POSITIONS = [
 	"bottom-right",
 ] as const;
 
-export type SileoPosition = (typeof SILEO_POSITIONS)[number];
+export type PilloPosition = (typeof PILLO_POSITIONS)[number];
 
-export interface SileoCustomRenderProps {
+export interface PilloCustomRenderProps {
 	id: string;
 	dismiss: () => void;
 }
 
-export type SileoCustomRender = (props: SileoCustomRenderProps) => ReactNode;
+export type PilloCustomRender = (props: PilloCustomRenderProps) => ReactNode;
 
-export interface SileoOptions {
+export interface PilloOptions {
 	id?: string;
 	title?: string;
 	description?: ReactNode;
-	type?: SileoState;
-	position?: SileoPosition;
+	type?: PilloState;
+	position?: PilloPosition;
 	duration?: number | null;
 	icon?: ReactNode;
-	styles?: SileoStyles;
+	styles?: PilloStyles;
 	fill?: string;
 	roundness?: number;
 	autopilot?: false | { expand?: number; collapse?: number };
-	button?: SileoButton;
-	custom?: SileoCustomRender;
+	button?: PilloButton;
+	custom?: PilloCustomRender;
 }

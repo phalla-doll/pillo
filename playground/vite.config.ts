@@ -6,8 +6,8 @@ export default defineConfig({
 	plugins: [react()],
 	resolve: {
 		alias: [
-			{ find: "sileo/styles.css", replacement: path.resolve(__dirname, "../src/styles.css") },
-			{ find: /^sileo$/, replacement: path.resolve(__dirname, "../src/index.ts") },
+			{ find: "pillo/styles.css", replacement: path.resolve(__dirname, "../src/styles.css") },
+			{ find: /^pillo$/, replacement: path.resolve(__dirname, "../src/index.ts") },
 		],
 	},
 	server: { port: 5173, open: true },

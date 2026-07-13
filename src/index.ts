@@ -1,13 +1,13 @@
 "use client";
 
-export { sileo, Toaster } from "./toast";
+export { pillo, Toaster } from "./toast";
 export type {
-	SileoButton,
-	SileoCustomRender,
-	SileoCustomRenderProps,
-	SileoOptions,
-	SileoPosition,
-	SileoState,
-	SileoStyles,
+	PilloButton,
+	PilloCustomRender,
+	PilloCustomRenderProps,
+	PilloOptions,
+	PilloPosition,
+	PilloState,
+	PilloStyles,
 } from "./types";
-export type { SileoPromiseOptions, SileoToasterProps } from "./toast";
+export type { PilloPromiseOptions, PilloToasterProps } from "./toast";
