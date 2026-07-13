@@ -144,6 +144,7 @@ export default function App() {
 						label: "Undo",
 						onClick: () => pillo.success("Restored Q3-forecast.xlsx"),
 					},
+					styles: { button: "pg-action-btn" },
 				}),
 		},
 		{

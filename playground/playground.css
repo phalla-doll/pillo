@@ -290,6 +290,13 @@ a {
 	box-shadow: none;
 }
 
+/* Action-toast demo: full-width Undo button with centered label. Applied via
+   pillo's styles.button API so only this example is affected, not the library. */
+.pg-action-btn {
+	width: 100%;
+	justify-content: center;
+}
+
 /* --------------------------------- Footer -------------------------------- */
 
 .foot {
