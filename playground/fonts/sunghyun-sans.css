@@ -1,0 +1,46 @@
+/*
+ * Sunghyun Sans — an open-source rounded typeface ("SF Pro Rounded for everyone").
+ * https://github.com/anaclumos/sunghyun-sans
+ * Licensed under SIL Open Font License 1.1 — see ./OFL.txt.
+ * Self-hosted (woff2, Latin family) to keep the playground bundled and offline.
+ */
+
+@font-face {
+	font-family: "Sunghyun Sans";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("./SunghyunSans-Regular.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Sunghyun Sans";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("./SunghyunSans-Medium.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Sunghyun Sans";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("./SunghyunSans-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Sunghyun Sans";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("./SunghyunSans-Bold.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Sunghyun Sans";
+	font-style: normal;
+	font-weight: 800;
+	font-display: swap;
+	src: url("./SunghyunSans-ExtraBold.woff2") format("woff2");
+}
