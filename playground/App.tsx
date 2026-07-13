@@ -52,14 +52,39 @@ const SparkleIcon = () => (
 	</svg>
 );
 
+/* ---------------------------- Theme management ---------------------------- */
+
 type Theme = "light" | "dark" | "system";
 const THEME_ORDER: Theme[] = ["system", "light", "dark"];
+
+function useTheme() {
+	const [theme, setTheme] = useState<Theme>("dark");
+
+	useEffect(() => {
+		const root = document.documentElement;
+		const mq = window.matchMedia("(prefers-color-scheme: dark)");
+
+		const apply = () => {
+			const resolved =
+				theme === "system" ? (mq.matches ? "dark" : "light") : theme;
+			root.setAttribute("data-theme", resolved);
+		};
+
+		apply();
+		if (theme === "system") {
+			mq.addEventListener("change", apply);
+			return () => mq.removeEventListener("change", apply);
+		}
+	}, [theme]);
+
+	return [theme, setTheme] as const;
+}
 
 /* --------------------------------- App ----------------------------------- */
 
 export default function App() {
 	const [position, setPosition] = useState<PilloPosition>("top-right");
-	const [theme, setTheme] = useState<Theme>("dark");
+	const [theme, setTheme] = useTheme();
 	const [scrolled, setScrolled] = useState(false);
 
 	useEffect(() => {
