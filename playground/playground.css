@@ -294,7 +294,8 @@ a {
 	margin-top: auto;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: center;
+	text-align: center;
 	padding-block: 24px;
 	border-top: 1px solid var(--c-line);
 	font-size: 0.85rem;

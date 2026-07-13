@@ -279,7 +279,6 @@ export default function App() {
 
 			<footer className="foot shell">
 				<span>Pillo — MIT License</span>
-				<a href="#playground">Playground →</a>
 			</footer>
 
 			<Toaster position={position} theme={theme} />
