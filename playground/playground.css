@@ -1,7 +1,7 @@
 /* ============================== Design tokens ============================= */
 
 :root {
-	font-family: ui-rounded, "SF Pro Rounded", "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+	font-family: ui-rounded, "SF Pro Rounded", "Sunghyun Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
 
 	/* better-typography: smoothing on the root, fail visibly on missing weights */
 	-webkit-font-smoothing: antialiased;
