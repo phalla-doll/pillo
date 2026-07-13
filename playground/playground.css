@@ -1,7 +1,6 @@
 /* ============================== Design tokens ============================= */
 
 :root {
-	color-scheme: dark;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
 
 	/* better-typography: smoothing on the root, fail visibly on missing weights */
@@ -9,28 +8,36 @@
 	-moz-osx-font-smoothing: grayscale;
 	font-synthesis: none;
 
-	/* better-colors: one neutral ramp, constant cool hue (285°), stepped L */
-	--c-bg: oklch(0.15 0.005 285);
-	--c-surface-1: oklch(0.19 0.006 285);
-	--c-surface-2: oklch(0.21 0.008 285);
-	--c-surface-3: oklch(0.24 0.009 285);
-
-	--c-text: oklch(0.97 0.003 285);
-	--c-text-muted: oklch(0.77 0.006 285);
-	--c-text-dim: oklch(0.68 0.006 285);
-	--c-dot: oklch(0.44 0.01 285);
-	--c-dot-hover: oklch(0.58 0.012 285);
+	--ease: cubic-bezier(0.2, 0, 0, 1);
 
 	/* Accent — single hue, matches the library's `info` state */
 	--accent: oklch(0.685 0.169 237.323);
 	--accent-soft: color-mix(in oklch, var(--accent) 18%, transparent);
 	--accent-ring: color-mix(in oklch, var(--accent) 45%, transparent);
+}
 
-	/* better-ui: depth as a shadow ring (dark mode = single white ring) */
-	--shadow-border: 0 0 0 1px oklch(1 0 0 / 0.08);
-	--shadow-border-hover: 0 0 0 1px oklch(1 0 0 / 0.13);
+/* ---- Dark (default; matches the reference site) ---- */
+:root,
+:root[data-theme="dark"] {
+	color-scheme: dark;
 
-	--ease: cubic-bezier(0.2, 0, 0, 1);
+	/* better-colors: one neutral ramp, constant cool hue (285°), stepped L */
+	--c-bg: oklch(0.13 0.004 285);
+	--c-surface-1: oklch(0.17 0.006 285);
+	--c-surface-2: oklch(0.2 0.008 285);
+	--c-surface-3: oklch(0.25 0.009 285);
+
+	--c-text: oklch(0.98 0.003 285);
+	--c-text-muted: oklch(0.72 0.006 285);
+	--c-text-dim: oklch(0.55 0.006 285);
+
+	--c-line: oklch(1 0 0 / 0.09);
+	--c-line-dashed: oklch(1 0 0 / 0.14);
+
+	--shadow-border: 0 0 0 1px oklch(1 0 0 / 0.07);
+	--shadow-border-hover: 0 0 0 1px oklch(1 0 0 / 0.12);
+
+	--wordmark-dot: var(--accent);
 }
 
 * {
@@ -49,303 +56,267 @@ body {
 	background: color-mix(in oklch, var(--accent) 30%, transparent);
 }
 
-.wrap {
-	max-width: 880px;
-	margin: 0 auto;
-	padding: 48px 24px 120px;
-}
-
-h1 {
-	margin: 0 0 8px;
-	font-size: 1.75rem;
-	font-weight: 700;
-	line-height: 1.1;
-	letter-spacing: -0.02em;
-	text-wrap: balance;
-}
-
-p.sub {
-	margin: 0 0 32px;
-	max-width: 60ch;
-	color: var(--c-text-muted);
-	text-wrap: pretty;
-}
-
-.sub code {
-	padding: 1px 5px;
-	border-radius: 5px;
-	background: var(--c-surface-2);
-	box-shadow: var(--shadow-border);
-	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-	font-size: 0.85em;
-}
-
-/* --------------------------------- Buttons -------------------------------- */
-
-.grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-	gap: 12px;
-	margin-bottom: 32px;
-}
-
-button {
-	appearance: none;
-	border: 0;
-	min-height: 40px; /* better-ui: desktop hit area */
-	background: var(--c-surface-2);
+a {
 	color: inherit;
-	padding: 12px 14px;
-	border-radius: 10px;
-	font: inherit;
-	font-size: 14px;
-	cursor: pointer;
-	box-shadow: var(--shadow-border);
-	/* better-ui: specific properties only, never `transition: all` */
-	transition:
-		background-color 150ms var(--ease),
-		box-shadow 150ms var(--ease),
-		scale 150ms var(--ease);
+	text-decoration: none;
 }
 
-button:hover {
-	background: var(--c-surface-3);
-	box-shadow: var(--shadow-border-hover);
-}
+/* ================================ Page shell ============================= */
 
-button:active {
-	scale: 0.96; /* better-ui: never below 0.95 */
-}
-
-/* -------------------------------- Fieldsets ------------------------------- */
-
-fieldset {
-	border: 0;
-	border-radius: 14px;
-	padding: 16px 18px;
-	margin: 0 0 20px;
-	box-shadow: var(--shadow-border);
-}
-
-legend {
-	padding: 0 10px;
-	color: var(--c-text-muted);
-	font-size: 11px;
-	font-weight: 600;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
-}
-
-label {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	margin-inline-end: 14px;
-	font-size: 13px;
-	color: var(--c-text-muted);
-}
-
-/* ----------------------------- Toaster config ----------------------------- */
-
-.toaster-config {
+.page {
 	display: flex;
 	flex-direction: column;
-	gap: 18px;
+	min-height: 100vh;
 }
 
-.control-row {
+.shell {
+	width: 100%;
+	max-width: 1180px;
+	margin: 0 auto;
+	padding-inline: clamp(20px, 5vw, 56px);
+}
+
+/* ---------------------------------- Nav ---------------------------------- */
+
+.nav {
+	position: sticky;
+	top: 0;
+	z-index: 20;
 	display: flex;
 	align-items: center;
-	gap: 16px;
-	flex-wrap: wrap;
+	justify-content: space-between;
+	padding-block: 22px;
+	background: color-mix(in oklch, var(--c-bg) 70%, transparent);
+	backdrop-filter: saturate(180%) blur(12px);
+	-webkit-backdrop-filter: saturate(180%) blur(12px);
+	border-bottom: 1px solid transparent;
+	transition: border-color 200ms var(--ease);
 }
 
-.control-label {
-	font-size: 11px;
-	font-weight: 600;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
-	color: var(--c-text-muted);
-	min-width: 64px;
+.nav[data-scrolled="true"] {
+	border-bottom-color: var(--c-line);
 }
 
-/* Position picker: visual screen-map grid.
-   Concentric: cells 10px + 4px padding = 14px outer radius. */
-.picker-grid {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-template-rows: repeat(2, 1fr);
-	gap: 2px;
-	width: 280px;
-	height: 150px;
-	padding: 4px;
-	border-radius: 14px;
-	background: linear-gradient(180deg, var(--c-surface-1), var(--c-bg));
-	box-shadow:
-		var(--shadow-border),
-		inset 0 1px 0 oklch(1 0 0 / 0.03);
+.nav-brand {
+	font-size: 1.05rem;
+	font-weight: 700;
+	letter-spacing: -0.01em;
 }
 
-.picker-cell {
-	position: relative;
-	appearance: none;
-	border: 0;
-	background: transparent;
-	padding: 0;
-	border-radius: 10px;
-	cursor: pointer;
-	transition:
-		background-color 150ms var(--ease),
-		box-shadow 150ms var(--ease),
-		scale 150ms var(--ease);
+.nav-brand .dot {
+	color: var(--wordmark-dot);
 }
 
-.picker-cell:hover {
-	background: oklch(1 0 0 / 0.03);
-}
-
-.picker-cell:active {
-	scale: 0.96;
-}
-
-.picker-cell[data-active="true"] {
-	background: var(--accent-soft);
-	box-shadow: inset 0 0 0 1px var(--accent-ring);
-}
-
-.picker-dot {
-	position: absolute;
-	width: 10px;
-	height: 10px;
-	border-radius: 9999px;
-	background: var(--c-dot);
-	transition:
-		background-color 150ms var(--ease),
-		box-shadow 150ms var(--ease);
-}
-
-.picker-cell:hover .picker-dot {
-	background: var(--c-dot-hover);
-}
-
-.picker-cell[data-active="true"] .picker-dot {
-	background: var(--accent);
-	box-shadow: 0 0 10px color-mix(in oklch, var(--accent) 70%, transparent);
-}
-
-.picker-cell[data-pos^="top"] .picker-dot {
-	top: 10px;
-}
-.picker-cell[data-pos^="bottom"] .picker-dot {
-	bottom: 10px;
-}
-.picker-cell[data-pos$="left"] .picker-dot {
-	left: 10px;
-}
-.picker-cell[data-pos$="right"] .picker-dot {
-	right: 10px;
-}
-.picker-cell[data-pos$="center"] .picker-dot {
-	left: 50%;
-	transform: translateX(-50%);
-}
-
-.picker-readout {
-	font-size: 12px;
-	color: var(--c-text-dim);
-}
-.picker-readout strong {
-	color: var(--accent);
-	font-weight: 600;
-}
-
-/* Theme segmented toggle.
-   Concentric: segments 9px + 4px padding = 13px outer radius. */
-.theme-toggle {
-	display: inline-flex;
+.nav-links {
+	display: flex;
 	align-items: center;
-	gap: 2px;
-	padding: 4px;
-	border-radius: 13px;
-	background: var(--c-surface-1);
-	box-shadow: var(--shadow-border);
+	gap: clamp(16px, 2.5vw, 32px);
 }
 
-.theme-seg {
+.nav-link {
+	font-size: 0.92rem;
+	color: var(--c-text-muted);
+	transition: color 150ms var(--ease);
+}
+
+.nav-link:hover {
+	color: var(--c-text);
+}
+
+.theme-btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	gap: 7px;
-	min-height: 40px; /* better-ui: desktop hit area */
-	appearance: none;
+	width: 34px;
+	height: 34px;
 	border: 0;
-	/* better-ui optical alignment: icon side (left) = text side − 2px */
-	padding: 8px 14px 8px 12px;
 	border-radius: 9px;
-	font: inherit;
-	font-size: 13px;
-	font-weight: 500;
-	color: var(--c-text-dim);
 	background: transparent;
+	color: var(--c-text-muted);
 	cursor: pointer;
-	box-shadow: none;
 	transition:
 		background-color 150ms var(--ease),
 		color 150ms var(--ease),
 		scale 150ms var(--ease);
 }
 
-.theme-seg:hover {
-	background: transparent;
-	color: var(--c-text-muted);
-}
-
-.theme-seg[data-active="true"] {
+.theme-btn:hover {
 	color: var(--c-text);
-	background: var(--accent-soft);
-	box-shadow: inset 0 0 0 1px var(--accent-ring);
+	background: var(--c-surface-2);
 }
 
-.theme-seg:active {
-	scale: 0.96;
+.theme-btn:active {
+	scale: 0.94;
+}
+
+/* --------------------------------- Hero ---------------------------------- */
+
+.hero {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding-block: clamp(64px, 12vh, 140px);
+}
+
+.wordmark {
+	margin: 0;
+	font-size: clamp(3.25rem, 11vw, 7.5rem);
+	font-weight: 800;
+	line-height: 0.9;
+	letter-spacing: -0.045em;
+}
+
+.wordmark .dot {
+	color: var(--wordmark-dot);
+}
+
+.tagline {
+	margin: 26px 0 0;
+	max-width: 42ch;
+	font-size: clamp(1rem, 2.2vw, 1.2rem);
+	color: var(--c-text-muted);
+	text-wrap: balance;
+}
+
+/* ------------------------------ Controls ---------------------------------- */
+
+.controls {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 26px;
+	padding-bottom: clamp(48px, 8vh, 96px);
+}
+
+.pill-row {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 10px;
+}
+
+.divider {
+	width: min(720px, 90%);
+	height: 0;
+	border-top: 1px dashed var(--c-line-dashed);
+}
+
+/* Shared pill */
+.pill {
+	appearance: none;
+	border: 0;
+	min-height: 40px;
+	padding: 9px 20px;
+	border-radius: 9999px;
+	background: var(--c-surface-2);
+	color: var(--c-text-muted);
+	font: inherit;
+	font-size: 0.92rem;
+	font-weight: 500;
+	cursor: pointer;
+	box-shadow: var(--shadow-border);
+	transition:
+		background-color 150ms var(--ease),
+		color 150ms var(--ease),
+		box-shadow 150ms var(--ease),
+		scale 150ms var(--ease);
+}
+
+.pill:hover {
+	color: var(--c-text);
+	background: var(--c-surface-3);
+	box-shadow: var(--shadow-border-hover);
+}
+
+.pill:active {
+	scale: 0.95;
+}
+
+/* Position pill — active is a solid, inverted fill */
+.pill.is-pos[data-active="true"] {
+	background: var(--c-text);
+	color: var(--c-bg);
+	box-shadow: none;
+	font-weight: 600;
+}
+
+.pill.is-pos[data-active="true"]:hover {
+	background: var(--c-text);
+	color: var(--c-bg);
+}
+
+/* Secondary utilities row — quieter than the type row */
+.pill.is-ghost {
+	background: transparent;
+	box-shadow: none;
+	color: var(--c-text-dim);
+	font-size: 0.86rem;
+	padding-block: 7px;
+}
+
+.pill.is-ghost:hover {
+	background: var(--c-surface-2);
+	color: var(--c-text);
+	box-shadow: none;
+}
+
+/* --------------------------------- Footer -------------------------------- */
+
+.foot {
+	margin-top: auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-block: 24px;
+	border-top: 1px solid var(--c-line);
+	font-size: 0.85rem;
+	color: var(--c-text-dim);
+}
+
+.foot a {
+	color: var(--c-text-muted);
+	transition: color 150ms var(--ease);
+}
+
+.foot a:hover {
+	color: var(--c-text);
 }
 
 /* ------------------------- Staggered page entrance ------------------------ */
-/* better-ui: split content into chunks, fade each up with a small delay. */
 
 @media (prefers-reduced-motion: no-preference) {
-	.wrap > h1,
-	.wrap > .sub,
-	.wrap > fieldset {
-		animation: pg-enter 500ms var(--ease) both;
+	.wordmark,
+	.tagline,
+	.controls > * {
+		animation: pg-enter 600ms var(--ease) both;
 	}
 
-	.wrap > h1 {
-		animation-delay: 0ms;
+	.wordmark {
+		animation-delay: 40ms;
 	}
-	.wrap > .sub {
-		animation-delay: 60ms;
-	}
-	.wrap > fieldset:nth-of-type(1) {
+	.tagline {
 		animation-delay: 120ms;
 	}
-	.wrap > fieldset:nth-of-type(2) {
-		animation-delay: 180ms;
+	.controls > *:nth-child(1) {
+		animation-delay: 220ms;
 	}
-	.wrap > fieldset:nth-of-type(3) {
-		animation-delay: 240ms;
+	.controls > *:nth-child(2) {
+		animation-delay: 280ms;
 	}
-	.wrap > fieldset:nth-of-type(4) {
-		animation-delay: 300ms;
+	.controls > *:nth-child(3) {
+		animation-delay: 320ms;
 	}
-	.wrap > fieldset:nth-of-type(5) {
-		animation-delay: 360ms;
+	.controls > *:nth-child(4) {
+		animation-delay: 380ms;
 	}
 
 	@keyframes pg-enter {
 		from {
 			opacity: 0;
-			transform: translateY(10px);
+			transform: translateY(12px);
 			filter: blur(4px);
 		}
 		to {
@@ -353,5 +324,12 @@ label {
 			transform: translateY(0);
 			filter: blur(0);
 		}
+	}
+}
+
+@media (max-width: 560px) {
+	.foot {
+		flex-direction: column;
+		gap: 8px;
 	}
 }
