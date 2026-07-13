@@ -2,9 +2,10 @@
   <h1>Pillo</h1>
   <p>An opinionated, physics-based toast component for React.</p>
   <video src="https://github.com/user-attachments/assets/a292d310-9189-490a-9f9d-d0a1d09defce"></video>
+  <p><a href="https://phalla-doll.github.io/pillo/"><strong>Live demo →</strong></a></p>
 </div>
 
-> **Pillo** is the maintained successor to [`hiaaryan/sileo`](https://github.com/hiaaryan/sileo), which is no longer maintained. It carries forward the same liquid, physics-based design with correctness, accessibility, SSR, and API improvements. See [`REVIEW.md`](./REVIEW.md) for the changes vs the original and [`CHANGELOG.md`](./CHANGELOG.md) for release notes.
+> **Pillo** is the maintained successor to [`hiaaryan/sileo`](https://github.com/hiaaryan/sileo), which is no longer maintained. It carries forward the same liquid, physics-based design with correctness, accessibility, SSR, and API improvements. See [`CHANGELOG.md`](./CHANGELOG.md) for release notes.
 
 ### Installation
 
