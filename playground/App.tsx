@@ -219,9 +219,6 @@ export default function App() {
 					<a className="nav-link" href={`${REPO_URL}#readme`} target="_blank" rel="noreferrer">
 						Docs
 					</a>
-					<a className="nav-link" href="#playground">
-						Playground
-					</a>
 					<button
 						type="button"
 						className="theme-btn"
