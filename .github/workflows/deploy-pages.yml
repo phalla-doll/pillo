@@ -24,6 +24,12 @@ jobs:
 
       - uses: oven-sh/setup-bun@v2
 
+      # The playground aliases `pillo` to ../src, whose imports (e.g.
+      # `motion/react`) resolve against the repo-root node_modules — so the
+      # library's own deps must be installed, not just the playground's.
+      - name: Install library dependencies
+        run: bun install
+
       - name: Install playground dependencies
         working-directory: playground
         run: bun install
