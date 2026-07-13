@@ -319,7 +319,10 @@ a {
 	.wordmark,
 	.tagline,
 	.controls > * {
-		animation: pg-enter 600ms var(--ease) both;
+		/* `backwards` (not `both`) so the ending `filter: blur(0)` is not held
+		   after the animation — a retained filter promotes the element to a
+		   composited layer and leaves its text permanently soft. */
+		animation: pg-enter 600ms var(--ease) backwards;
 	}
 
 	.wordmark {
