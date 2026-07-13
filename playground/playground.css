@@ -115,7 +115,9 @@ a {
 	backdrop-filter: saturate(180%) blur(12px);
 	-webkit-backdrop-filter: saturate(180%) blur(12px);
 	border-bottom: 1px solid transparent;
-	transition: border-color 200ms var(--ease);
+	transition:
+		background-color 300ms var(--ease),
+		border-color 200ms var(--ease);
 }
 
 .nav[data-scrolled="true"] {
