@@ -106,41 +106,44 @@ export default function App() {
 			label: "Success",
 			run: () =>
 				pillo.success({
-					title: "Saved successfully",
-					description: "Your changes are now live across all devices.",
+					title: "Payment received",
+					description: "$1,290.00 from Northwind Traders cleared. Receipt sent to billing@northwind.co.",
 				}),
 		},
 		{
 			label: "Error",
 			run: () =>
 				pillo.error({
-					title: "Couldn't save",
-					description: "We hit a network error. Check your connection and try again.",
+					title: "Deploy failed",
+					description: "Build #482 exited with code 1 — 3 type errors in checkout.ts. Check the logs to retry.",
 				}),
 		},
 		{
 			label: "Warning",
 			run: () =>
 				pillo.warning({
-					title: "Disk is almost full",
-					description: "Less than 1 GB remaining. Free up space to avoid disruptions.",
+					title: "Storage almost full",
+					description: "You've used 19.2 GB of 20 GB. New uploads will pause once you reach the limit.",
 				}),
 		},
 		{
 			label: "Info",
 			run: () =>
 				pillo.info({
-					title: "New build available",
-					description: "Reload the page to pick up the latest release notes and fixes.",
+					title: "Version 2.4.0 is available",
+					description: "Reload to pick up faster search, dark-mode fixes, and 11 other improvements.",
 				}),
 		},
 		{
 			label: "Action",
 			run: () =>
 				pillo.action({
-					title: "File deleted",
-					description: "You can still undo this.",
-					button: { label: "Undo", onClick: () => pillo.success("Restored") },
+					title: "File moved to Trash",
+					description: "Q3-forecast.xlsx will be permanently deleted in 30 days.",
+					button: {
+						label: "Undo",
+						onClick: () => pillo.success("Restored Q3-forecast.xlsx"),
+					},
 				}),
 		},
 		{
@@ -151,9 +154,18 @@ export default function App() {
 						setTimeout(() => (Math.random() > 0.5 ? res("ok") : rej("nope")), 1500),
 					),
 					{
-						loading: { title: "Working…", description: "Crunching the numbers, hang tight." },
-						success: { title: "Done!", description: "All tasks completed successfully." },
-						error: (e) => ({ title: "Failed", description: `Something went wrong: ${String(e)}` }),
+						loading: {
+							title: "Publishing post…",
+							description: "Pushing “Designing in the open” to your blog.",
+						},
+						success: {
+							title: "Post published",
+							description: "“Designing in the open” is now live at yoursite.com/blog.",
+						},
+						error: () => ({
+							title: "Publish failed",
+							description: "Couldn't reach the CMS. Your draft is saved — try again in a moment.",
+						}),
 					},
 				),
 		},
@@ -161,8 +173,8 @@ export default function App() {
 			label: "Icon",
 			run: () =>
 				pillo.show({
-					title: "Custom icon",
-					description: "Any ReactNode works as the toast icon.",
+					title: "Weekly summary ready",
+					description: "Your digest of 27 unread threads across 4 channels is ready to read.",
 					icon: <SparkleIcon />,
 				}),
 		},
@@ -175,15 +187,15 @@ export default function App() {
 			label: "Loading → success",
 			run: () => {
 				const id = pillo.loading({
-					title: "Uploading…",
-					description: "Sending report.pdf to the server.",
+					title: "Uploading report.pdf…",
+					description: "3.4 MB · sending to the Q3 Reports drive.",
 				});
 				setTimeout(
 					() =>
 						pillo.update(id, {
 							type: "success",
-							title: "Uploaded!",
-							description: "report.pdf is now available in your shared drive.",
+							title: "Upload complete",
+							description: "report.pdf is now in Q3 Reports and shared with 4 people.",
 						}),
 					1500,
 				);
@@ -192,17 +204,31 @@ export default function App() {
 		{
 			label: "Custom JSX",
 			run: () =>
-				pillo.custom(({ id, dismiss }) => (
+				pillo.custom(({ dismiss }) => (
 					<div role="status" style={{ padding: 12 }}>
-						<div style={{ fontWeight: 600, marginBottom: 6 }}>Custom JSX</div>
-						<div style={{ fontSize: 13, opacity: 0.8, marginBottom: 8 }}>id: {id}</div>
+						<div style={{ fontWeight: 600, marginBottom: 4 }}>Maya sent you a file</div>
+						<div style={{ fontSize: 13, opacity: 0.8, marginBottom: 8 }}>
+							brand-guidelines-v3.pdf · 8.1 MB
+						</div>
 						<button className="pill is-ghost" onClick={dismiss}>
-							Close
+							Dismiss
 						</button>
 					</div>
 				)),
 		},
-		{ label: "Queue 5", run: () => { for (let i = 0; i < 5; i++) pillo.info(`Toast #${i + 1}`); } },
+		{
+			label: "Queue 5",
+			run: () => {
+				const feed = [
+					"Maya approved your pull request",
+					"CI passed on main · 2m 14s",
+					"Deploy to production succeeded",
+					"New sign-up: dana@acme.co",
+					"Nightly backup complete · 4.2 GB",
+				];
+				feed.forEach((title, i) => pillo.info({ id: `feed-${i}`, title }));
+			},
+		},
 		{ label: "Clear all", run: () => pillo.clear() },
 	];
 
