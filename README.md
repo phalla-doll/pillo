@@ -105,13 +105,29 @@ The `<Toaster />` is safe to render on the server. When `theme="system"` it omit
 
 Modern evergreen browsers. Uses CSS `oklch`, `color-mix`, `linear()` easings, and SVG goo filters.
 
+### Project structure
+
+Pillo is a [Bun workspace](https://bun.sh/docs/install/workspaces). The published npm package `pillo` is the React renderer; the framework-agnostic state core lives in `@pillo/core`.
+
+```
+packages/
+  core/      @pillo/core — the store, the pillo.* API, types, and styles.css (no framework deps)
+  react/     pillo — the <Toaster/> + <Pillo/> React renderers, over @pillo/core
+  angular/   placeholder reserving a future Angular renderer
+playground/  local Vite demo, aliased to the packages' source
+```
+
+`@pillo/core` contains no React — it's the shared foundation a non-React renderer would build on. **You never install it directly:** `pillo` re-exports the full core API, and everything loads a single shared store. See [`MONOREPO-PLAN.md`](./MONOREPO-PLAN.md) for the design.
+
 ### Development
+
+Run from the repo root; scripts fan out across the workspace.
 
 ```bash
 bun install
-bun run typecheck
-bun run test
-bun run build
+bun run typecheck   # every package
+bun run test        # vitest across the workspace
+bun run build       # builds @pillo/core first, then pillo
 ```
 
 ### Credits
