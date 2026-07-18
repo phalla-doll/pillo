@@ -1,64 +1,24 @@
 {
-	"name": "pillo",
-	"version": "0.3.0",
-	"description": "An opinionated, physics based toast notification library for react.",
+	"name": "pillo-workspace",
+	"private": true,
+	"description": "Monorepo for Pillo — a physics-based toast library.",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/phalla-doll/pillo.git"
 	},
-	"sideEffects": [
-		"**/*.css",
-		"./dist/styles.css"
-	],
-	"exports": {
-		".": {
-			"import": {
-				"types": "./dist/index.d.mts",
-				"default": "./dist/index.mjs"
-			},
-			"require": {
-				"types": "./dist/index.d.ts",
-				"default": "./dist/index.js"
-			},
-			"default": "./dist/index.js"
-		},
-		"./styles.css": "./dist/styles.css"
-	},
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"files": [
-		"dist"
-	],
-	"engines": {
-		"node": ">=18"
-	},
+	"workspaces": ["packages/*", "playground"],
 	"scripts": {
-		"build": "rm -rf dist && bunchee && cp src/styles.css dist/styles.css",
-		"dev": "bunchee --watch",
-		"typecheck": "tsc --noEmit",
+		"build": "bun run --filter='@pillo/core' build && bun run --filter='pillo' build",
+		"dev": "bun run --filter='pillo' dev",
+		"typecheck": "bun run --filter='*' typecheck",
 		"test": "vitest run",
 		"test:watch": "vitest"
 	},
-	"peerDependencies": {
-		"react": ">=18",
-		"react-dom": ">=18"
-	},
 	"devDependencies": {
-		"@testing-library/jest-dom": "^6.4.0",
-		"@testing-library/react": "^16.0.0",
-		"@testing-library/user-event": "^14.5.0",
-		"@types/react": "^18.3.0",
-		"@types/react-dom": "^18.3.0",
 		"@vitest/coverage-v8": "^2.1.0",
 		"bunchee": "^6.9.4",
-		"jsdom": "^25.0.0",
-		"react": "^18.3.0",
-		"react-dom": "^18.3.0",
 		"typescript": "^5.5.0",
 		"vitest": "^2.1.0"
-	},
-	"dependencies": {
-		"motion": "^12.34.0"
 	}
 }

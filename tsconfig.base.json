@@ -11,11 +11,8 @@
 		"declaration": true,
 		"declarationMap": true,
 		"sourceMap": true,
-		"outDir": "dist",
 		"skipLibCheck": true,
 		"isolatedModules": true,
 		"types": ["vitest/globals"]
-	},
-	"include": ["src", "tests"],
-	"exclude": ["node_modules", "dist"]
+	}
 }
