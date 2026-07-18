@@ -119,6 +119,8 @@ playground/  local Vite demo, aliased to the packages' source
 
 `@pillo/core` contains no React — it's the shared foundation a non-React renderer would build on. **You never install it directly:** `pillo` re-exports the full core API, and everything loads a single shared store. See [`MONOREPO-PLAN.md`](./MONOREPO-PLAN.md) for the design.
 
+> **Angular support is planned, not yet shipped.** `@pillo/angular` is a reserved placeholder — no package is published yet. The intended API (same `pillo.*` calls, a `<pillo-toaster />` component) is sketched in [`packages/angular/README.md`](./packages/angular/README.md).
+
 ### Development
 
 Run from the repo root; scripts fan out across the workspace.
