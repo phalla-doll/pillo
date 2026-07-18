@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.0 — monorepo + `@pillo/core` extraction
+
+No breaking changes for React consumers: `npm i pillo`, the public API (`pillo.*`), `<Toaster />`, `import "pillo/styles.css"`, and every exported type are all unchanged.
+
+Internally the project became a workspace and the framework-agnostic parts were split out:
+
+- **New `@pillo/core` package** — the toast store, the imperative `pillo.*` API, the constants, the portable types, and the stylesheet, with **zero framework dependencies**. Its slot-bearing types (`PilloOptions<Slot>`, `PilloCustomRender<Slot>`) let any renderer specialize the embeddable-content type; `pillo` (this package) specializes it to `ReactNode`.
+- **`pillo` is now `packages/react`** — the `<Toaster />` and `<Pillo />` renderers only. It depends on `@pillo/core` (kept external in the bundle, so exactly one store singleton loads) and copies core's stylesheet at build time so `import "pillo/styles.css"` keeps working.
+- Groundwork for a future `@pillo/angular` sharing the same core.
+
 ## 0.3.0 — renamed to `pillo`
 
 `pillo` is the maintained successor to the now-unmaintained [`sileo`](https://github.com/hiaaryan/sileo). The package, public API (`pillo.*`), CSS custom properties (`--pillo-*`), and data attributes (`data-pillo-*`) were all renamed from `sileo`. No behavioural changes — this is a rename of the 0.2.0 line below.
