@@ -236,7 +236,7 @@ a {
 /* Fan the palette open on hover/focus so each framework is legible. */
 .framework-hint:hover .fw-chip:not(:first-child),
 .framework-hint:focus-within .fw-chip:not(:first-child) {
-	margin-left: 4px;
+	margin-left: -4px;
 }
 
 .fw-chip:hover {
