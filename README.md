@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Pillo</h1>
-  <p>An opinionated, physics-based toast component for React.</p>
+  <p>An opinionated, physics-based toast component for React, built on a framework-agnostic core.</p>
   <video src="https://github.com/user-attachments/assets/a292d310-9189-490a-9f9d-d0a1d09defce"></video>
   <p><a href="https://phalla-doll.github.io/pillo/"><strong>Live demo →</strong></a></p>
 </div>
