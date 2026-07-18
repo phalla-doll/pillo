@@ -188,6 +188,81 @@ a {
 	padding-block: clamp(64px, 12vh, 140px);
 }
 
+/* Framework hint — overlapping "coin" chips above the wordmark */
+.framework-hint {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: clamp(20px, 4vh, 34px);
+	padding: 6px 16px 6px 8px;
+	border-radius: 9999px;
+	background: var(--c-surface-1);
+	box-shadow: var(--shadow-border);
+}
+
+.fw-stack {
+	display: flex;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.fw-chip {
+	display: grid;
+	place-items: center;
+	width: 34px;
+	height: 34px;
+	border-radius: 9999px;
+	/* No coin — logos sit directly on the pill. */
+	background: transparent;
+	transition:
+		margin 220ms var(--ease),
+		transform 220ms var(--ease);
+}
+
+/* Overlap into a stack; the neutral coin's inner shadow reads as a seam. */
+.fw-chip:not(:first-child) {
+	margin-left: -15px;
+}
+
+.fw-chip img {
+	width: 20px;
+	height: 20px;
+	display: block;
+	pointer-events: none;
+}
+
+/* Fan the palette open on hover/focus so each framework is legible. */
+.framework-hint:hover .fw-chip:not(:first-child),
+.framework-hint:focus-within .fw-chip:not(:first-child) {
+	margin-left: 4px;
+}
+
+.fw-chip:hover {
+	transform: translateY(-3px);
+	z-index: 1;
+}
+
+.fw-hint-text {
+	font-size: 0.86rem;
+	font-weight: 500;
+	color: var(--c-text-muted);
+	white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fw-chip {
+		transition: none;
+	}
+}
+
+@media (max-width: 560px) {
+	.fw-hint-text {
+		display: none;
+	}
+}
+
 .wordmark {
 	margin: 0;
 	font-size: clamp(3.25rem, 11vw, 7.5rem);
@@ -323,6 +398,7 @@ a {
 /* ------------------------- Staggered page entrance ------------------------ */
 
 @media (prefers-reduced-motion: no-preference) {
+	.framework-hint,
 	.wordmark,
 	.tagline,
 	.controls > * {
@@ -332,6 +408,9 @@ a {
 		animation: pg-enter 600ms var(--ease) backwards;
 	}
 
+	.framework-hint {
+		animation-delay: 0ms;
+	}
 	.wordmark {
 		animation-delay: 40ms;
 	}

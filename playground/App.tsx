@@ -12,6 +12,17 @@ const POSITIONS: PilloPosition[] = [
 
 const REPO_URL = "https://github.com/phalla-doll/pillo";
 
+/* Framework logos — icons only, sourced from svgl.app (https://svgl.app/docs/api).
+   Stacked as overlapping "coin" chips to hint that Pillo is framework-agnostic. */
+const FRAMEWORKS: { name: string; src: string }[] = [
+	{ name: "React", src: "https://svgl.app/library/react_dark.svg" },
+	{ name: "Next.js", src: "https://svgl.app/library/nextjs_icon_dark.svg" },
+	{ name: "Vue", src: "https://svgl.app/library/vue.svg" },
+	{ name: "Angular", src: "https://svgl.app/library/angular.svg" },
+	{ name: "Svelte", src: "https://svgl.app/library/svelte.svg" },
+	{ name: "Solid", src: "https://svgl.app/library/solidjs.svg" },
+];
+
 /* --------------------------------- Icons --------------------------------- */
 
 const iconProps = {
@@ -259,6 +270,19 @@ export default function App() {
 			</nav>
 
 			<main className="hero shell" id="playground">
+				<div
+					className="framework-hint"
+					aria-label={`Works with any framework — ${FRAMEWORKS.map((f) => f.name).join(", ")}, and more`}
+				>
+					<ul className="fw-stack" aria-hidden="true">
+						{FRAMEWORKS.map((f) => (
+							<li key={f.name} className="fw-chip" title={f.name}>
+								<img src={f.src} alt="" width={20} height={20} loading="lazy" />
+							</li>
+						))}
+					</ul>
+					<span className="fw-hint-text">Works with any framework</span>
+				</div>
 				<h1 className="wordmark">
 					Playground<span className="dot">.</span>
 				</h1>
