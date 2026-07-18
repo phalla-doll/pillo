@@ -13,8 +13,9 @@
 		"isolatedModules": true,
 		"noEmit": true,
 		"paths": {
-			"pillo": ["../src/index.ts"],
-			"pillo/styles.css": ["../src/styles.css"]
+			"pillo": ["../packages/react/src/index.ts"],
+			"pillo/styles.css": ["../packages/core/src/styles.css"],
+			"@pillo/core": ["../packages/core/src/index.ts"]
 		}
 	},
 	"include": ["."]

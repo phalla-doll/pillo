@@ -12,8 +12,18 @@ export default defineConfig(({ command }) => ({
 		// deduped to a single copy or hooks break at build time.
 		dedupe: ["react", "react-dom"],
 		alias: [
-			{ find: "pillo/styles.css", replacement: path.resolve(__dirname, "../src/styles.css") },
-			{ find: /^pillo$/, replacement: path.resolve(__dirname, "../src/index.ts") },
+			{
+				find: "pillo/styles.css",
+				replacement: path.resolve(__dirname, "../packages/core/src/styles.css"),
+			},
+			{
+				find: /^pillo$/,
+				replacement: path.resolve(__dirname, "../packages/react/src/index.ts"),
+			},
+			{
+				find: /^@pillo\/core$/,
+				replacement: path.resolve(__dirname, "../packages/core/src/index.ts"),
+			},
 		],
 	},
 	server: { port: 5173, open: true },

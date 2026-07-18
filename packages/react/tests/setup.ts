@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom/vitest";
 import { afterEach } from "vitest";
 import { cleanup } from "@testing-library/react";
-import { pillo } from "../src/toast";
+import { pillo } from "@pillo/core";
 
 afterEach(() => {
 	pillo.clear();

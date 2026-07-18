@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 export type PilloState =
 	| "success"
 	| "loading"
@@ -37,20 +35,25 @@ export interface PilloCustomRenderProps {
 	dismiss: () => void;
 }
 
-export type PilloCustomRender = (props: PilloCustomRenderProps) => ReactNode;
+// `Slot` is whatever a given renderer accepts as embeddable content. React
+// specializes it to ReactNode; Angular to string | TemplateRef | Type. Core
+// treats it as opaque and only ever passes it through.
+export type PilloCustomRender<Slot = unknown> = (
+	props: PilloCustomRenderProps,
+) => Slot;
 
-export interface PilloOptions {
+export interface PilloOptions<Slot = unknown> {
 	id?: string;
 	title?: string;
-	description?: ReactNode;
+	description?: Slot;
 	type?: PilloState;
 	position?: PilloPosition;
 	duration?: number | null;
-	icon?: ReactNode;
+	icon?: Slot;
 	styles?: PilloStyles;
 	fill?: string;
 	roundness?: number;
 	autopilot?: false | { expand?: number; collapse?: number };
 	button?: PilloButton;
-	custom?: PilloCustomRender;
+	custom?: PilloCustomRender<Slot>;
 }

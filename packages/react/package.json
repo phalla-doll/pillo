@@ -1,0 +1,57 @@
+{
+	"name": "pillo",
+	"version": "0.4.0",
+	"description": "An opinionated, physics based toast notification library for react.",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/phalla-doll/pillo.git",
+		"directory": "packages/react"
+	},
+	"sideEffects": ["**/*.css", "./dist/styles.css"],
+	"exports": {
+		".": {
+			"import": {
+				"types": "./dist/index.d.mts",
+				"default": "./dist/index.mjs"
+			},
+			"require": {
+				"types": "./dist/index.d.ts",
+				"default": "./dist/index.js"
+			},
+			"default": "./dist/index.js"
+		},
+		"./styles.css": "./dist/styles.css"
+	},
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"files": ["dist"],
+	"engines": {
+		"node": ">=18"
+	},
+	"scripts": {
+		"build": "rm -rf dist && bunchee --tsconfig tsconfig.build.json && cp ../core/src/styles.css dist/styles.css",
+		"dev": "bunchee --watch",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run"
+	},
+	"peerDependencies": {
+		"react": ">=18",
+		"react-dom": ">=18"
+	},
+	"dependencies": {
+		"@pillo/core": "workspace:*",
+		"motion": "^12.34.0"
+	},
+	"devDependencies": {
+		"@testing-library/jest-dom": "^6.4.0",
+		"@testing-library/react": "^16.0.0",
+		"@testing-library/user-event": "^14.5.0",
+		"@types/react": "^18.3.0",
+		"@types/react-dom": "^18.3.0",
+		"jsdom": "^25.0.0",
+		"react": "^18.3.0",
+		"react-dom": "^18.3.0"
+	}
+}

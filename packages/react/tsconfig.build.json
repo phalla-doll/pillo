@@ -1,0 +1,9 @@
+{
+	"extends": "./tsconfig.json",
+	"comment": "Build-time config: clears the dev `paths` mapping so bunchee resolves @pillo/core via node_modules and keeps it EXTERNAL (never inlines a second copy of the store singleton). Core must be built first.",
+	"compilerOptions": {
+		"paths": {}
+	},
+	"include": ["src"],
+	"exclude": ["node_modules", "dist", "tests"]
+}
